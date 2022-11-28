@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux'
 
 const Results = () => {
     const res = useSelector((state)=>state.res);
-    console.log(res);
     const header = Array.isArray(res) && res.length != 0 && Object.keys(res[0]);
   return (
     <Box>
