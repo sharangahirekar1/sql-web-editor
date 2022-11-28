@@ -10,8 +10,8 @@ app.use(cors());
 const connection = mysql.createConnection({
     host:'localhost',
     user:'root',
-    password:'password',
-    database:'mydb'
+    password:'sharang1999',
+    database:'giraffe'
 })
 
 app.post('/',async(req,res)=>{
