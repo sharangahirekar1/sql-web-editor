@@ -30,6 +30,15 @@ app.get("/databases", async(req,res)=>{
     })
 })
 
+app.post("/changedatabase", async(req,res)=>{
+    let query = req.body;
+    console.log(`use ${query};`, "-------query -----------");
+    connection.query(`use ${query};`, function(err,r,fields){
+        if(err) throw err;
+        res.send(r);
+    })
+})
+
 app.listen(8000,async()=>{
     await connection.connect();
     console.log("Server is running on port",8000);

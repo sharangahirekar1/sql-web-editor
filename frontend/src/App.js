@@ -2,7 +2,7 @@ import { Box, Flex, Heading, Spacer, Table, Tbody, Td, Th, Thead, Tr } from '@ch
 import Editor from './components/Editor';
 import Results from './components/Results';
 import React from 'react';
-import { getDatabases } from './store/action';
+import { changeDatabase, getDatabases } from './store/action';
 import { useDispatch, useSelector } from 'react-redux';
 
 function App() {
@@ -12,6 +12,10 @@ function App() {
   React.useEffect(()=>{
     dispatch(getDatabases());
   },[])
+
+  const handleChangeDB = (db) => {
+    dispatch(changeDatabase(db));
+  }
   return (
     <Box>
       <Flex>
@@ -37,7 +41,7 @@ function App() {
                 </Thead>
                 <Tbody>
                   {databases?.map((database,i)=>(
-                    <Tr>
+                    <Tr onClick={()=>handleChangeDB(database.Database)}>
                       <Td>{i+1}</Td>
                       <Td>{database.Database}</Td>
                     </Tr>

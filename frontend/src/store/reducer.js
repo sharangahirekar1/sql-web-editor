@@ -1,4 +1,4 @@
-import { GET_DATABASE_ERROR, GET_DATABASE_REQUEST, GET_DATABASE_SUCCESS, POST_QUERY_ERROR, POST_QUERY_REQUEST, POST_QUERY_SUCCESS } from "./types";
+import { CHANGE_DATABASE_ERROR, CHANGE_DATABASE_REQUEST, CHANGE_DATABASE_SUCCESS, GET_DATABASE_ERROR, GET_DATABASE_REQUEST, GET_DATABASE_SUCCESS, POST_QUERY_ERROR, POST_QUERY_REQUEST, POST_QUERY_SUCCESS } from "./types";
 
 
 const initState = {
@@ -9,7 +9,8 @@ const initState = {
         loading: false,
         error: false,
         databases: []
-    }
+    },
+    currentDb:""
 }
 
 const reducer = (state=initState,action)=>{
@@ -42,6 +43,21 @@ const reducer = (state=initState,action)=>{
         case GET_DATABASE_ERROR: {
             return {
                 ...state,database: {...state.database, loading:false, error: true }
+            }
+        }
+        case CHANGE_DATABASE_REQUEST: {
+            return {
+                ...state,loading: true
+            }
+        }
+        case CHANGE_DATABASE_SUCCESS: {
+            return {
+                ...state,loading: false, currentDb: action.payload
+            }
+        }
+        case CHANGE_DATABASE_ERROR: {
+            return {
+                ...state,loading: false, error: true
             }
         }
         default: return state;
