@@ -1,13 +1,51 @@
-import { Box, Flex, Spacer } from '@chakra-ui/react';
+import { Box, Flex, Heading, Spacer, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import Editor from './components/Editor';
 import Results from './components/Results';
+import React from 'react';
+import { getDatabases } from './store/action';
+import { useDispatch, useSelector } from 'react-redux';
 
 function App() {
+  const dispatch = useDispatch();
+  const databases = useSelector((state)=>state.database.databases);
+  console.log(databases, 'databases');
+  React.useEffect(()=>{
+    dispatch(getDatabases());
+  },[])
   return (
     <Box>
       <Flex>
-        <Box p='4' w={'100vw'} height='100vh' bg='red.400'>
+        <Box p='4' w={'100vw'} height='100vh' bg='red.400' sx={{
+          display: 'flex',
+          flexDirection: "column",
+          justifyContent: "space-between"
+        }}>
           <Editor/>
+          <Box height="30vh" p='4' bg='yellow.400' sx={{
+            overflowY: "auto"
+          }}>
+            <Heading>
+              DATABASES
+            </Heading>
+            <Box>
+              <Table>
+                <Thead>
+                  <Tr>
+                    <Th>Sr. No.</Th>
+                    <Th>Database</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {databases?.map((database,i)=>(
+                    <Tr>
+                      <Td>{i+1}</Td>
+                      <Td>{database.Database}</Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+            </Box>
+          </Box>
         </Box>
         <Spacer />
         <Box p='4' w='100vw' h='100vh' bg='green.400'>

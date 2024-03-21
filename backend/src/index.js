@@ -10,7 +10,7 @@ app.use(cors());
 const connection = mysql.createConnection({
     host:'localhost',
     user:'root',
-    password:'sharang1999',
+    password:'qwerty',
     database:'giraffe'
 })
 
@@ -18,6 +18,13 @@ app.post('/',async(req,res)=>{
     let query = req.body;
     console.log(query);
     connection.query(query,function(err,r,fields){
+        if(err) throw err;
+        res.send(r);
+    })
+})
+
+app.get("/databases", async(req,res)=>{
+    connection.query("SHOW DATABASES;", function(err, r, fields){
         if(err) throw err;
         res.send(r);
     })
