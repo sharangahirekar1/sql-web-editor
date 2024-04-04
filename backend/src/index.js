@@ -1,8 +1,10 @@
 const express = require('express');
 const mysql = require('mysql2');
 const cors = require('cors');
+const defaultConfig = require("./../config/defaults.json");
 
 const app = express();
+const port = defaultConfig.development.port;
 
 app.use(express.text());
 app.use(cors());
@@ -39,7 +41,7 @@ app.post("/changedatabase", async(req,res)=>{
     })
 })
 
-app.listen(8000,async()=>{
+app.listen(port,async()=>{
     await connection.connect();
-    console.log("Server is running on port",8000);
+    console.log("Server is running on port",port);
 })
