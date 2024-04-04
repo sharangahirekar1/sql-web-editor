@@ -41,7 +41,7 @@ function App() {
                 </Thead>
                 <Tbody>
                   {databases?.map((database,i)=>(
-                    <Tr onClick={()=>handleChangeDB(database.Database)}>
+                    <Tr key={`${database.Database} ${i}`} onClick={()=>handleChangeDB(database.Database)}>
                       <Td>{i+1}</Td>
                       <Td>{database.Database}</Td>
                     </Tr>
