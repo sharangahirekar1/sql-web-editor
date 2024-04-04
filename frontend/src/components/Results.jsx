@@ -15,9 +15,12 @@ const Results = () => {
             </Tr>
           </Thead>
           <Tbody>
-              {Array.isArray(res) && res.length != 0 && res.map((row)=>{
+              {Array.isArray(res) && res.length != 0 && res.map((row,i)=>{
                 let rowValues = Object.values(row);
-                return <Tr>{rowValues.map((cell)=><Td>{cell}</Td>)}</Tr>
+                return <Tr sx={{
+                  bgColor: i % 2 === 0 ? "#013220" : 'transparent',
+                  color: i % 2 === 0 ? "white" : "black"
+                }}>{rowValues.map((cell)=><Td>{cell}</Td>)}</Tr>
               })}
           </Tbody>
         </Table>
