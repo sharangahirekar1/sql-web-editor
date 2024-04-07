@@ -26,12 +26,18 @@ function App() {
         }}>
           <Editor/>
           <Box height="30vh" p='4' bg='yellow.400' sx={{
-            overflowY: "auto"
+            overflowY: "auto",
+            position: 'relative',
           }}>
-            <Heading>
+            <Heading sx={{
+              position: 'fixed'
+            }}>
               DATABASES
             </Heading>
-            <Box>
+            <Box sx={{
+              position: 'relative',
+              top: 10
+            }}>
               <Table>
                 <Thead>
                   <Tr>
