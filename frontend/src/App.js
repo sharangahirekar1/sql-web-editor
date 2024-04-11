@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 function App() {
   const dispatch = useDispatch();
   const databases = useSelector((state)=>state.database.databases);
-  console.log(databases, 'databases');
   React.useEffect(()=>{
     dispatch(getDatabases());
   },[])

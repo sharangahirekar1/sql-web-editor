@@ -26,13 +26,11 @@ export const getDatabases = () => (dispatch) => {
         }
     }).then((res)=>{
         dispatch({type: GET_DATABASE_SUCCESS, payload: res.data});
-        console.log(res);
     }).catch((err)=>dispatch({type: GET_DATABASE_ERROR}))
 }
 
 export const changeDatabase = (dbName) => (dispatch) => {
     dispatch({type: CHANGE_DATABASE_REQUEST});
-    console.log(dbName, "Database Name redux action")
     axios({
         method: "POST",
         url: "http://localhost:8000/changedatabase",
@@ -42,6 +40,5 @@ export const changeDatabase = (dbName) => (dispatch) => {
         }
     }).then((res)=>{
         dispatch({type: CHANGE_DATABASE_SUCCESS, payload: res.data.stateChanges.schema});
-        console.log(res.data.stateChanges.schema, "changed db to");
     }).catch((err)=>dispatch({type: CHANGE_DATABASE_ERROR}))
 }
