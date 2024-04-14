@@ -21,6 +21,7 @@ app.post('/',async(req,res)=>{
     console.log(query);
     connection.query(query,function(err,r,fields){
         if(err) throw err;
+        console.log(fields, 'fields from querying');
         res.send(r);
     })
 })
@@ -28,6 +29,7 @@ app.post('/',async(req,res)=>{
 app.get("/databases", async(req,res)=>{
     connection.query("SHOW DATABASES;", function(err, r, fields){
         if(err) throw err;
+        console.log(fields, "fields from database showing");
         res.send(r);
     })
 })

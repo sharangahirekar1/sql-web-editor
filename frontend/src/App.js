@@ -1,12 +1,14 @@
 import { Box, Flex, Heading, Spacer, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import Editor from './components/Editor';
 import Results from './components/Results';
-import React from 'react';
+import React, { useContext } from 'react';
 import { changeDatabase, getDatabases } from './store/action';
 import { useDispatch, useSelector } from 'react-redux';
+import { toastContext } from './contexts/toast';
 
 function App() {
   const dispatch = useDispatch();
+  const { toast } = useContext(toastContext);
   const databases = useSelector((state)=>state.database.databases);
   React.useEffect(()=>{
     dispatch(getDatabases());
@@ -14,6 +16,13 @@ function App() {
 
   const handleChangeDB = (db) => {
     dispatch(changeDatabase(db));
+    toast({
+      title: 'Database changed',
+      description: "Database changed to " + db,
+      status: 'success',
+      duration: 7000,
+      isClosable: true,
+    })
   }
   return (
     <Box>
@@ -46,7 +55,9 @@ function App() {
                 </Thead>
                 <Tbody>
                   {databases?.map((database,i)=>(
-                    <Tr key={`${database.Database} ${i}`} onClick={()=>handleChangeDB(database.Database)}>
+                    <Tr sx={{
+                      cursor: "pointer"
+                    }} key={`${database.Database} ${i}`} onClick={()=>handleChangeDB(database.Database)}>
                       <Td>{i+1}</Td>
                       <Td>{database.Database}</Td>
                     </Tr>
