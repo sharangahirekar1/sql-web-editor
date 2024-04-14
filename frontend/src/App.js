@@ -36,6 +36,8 @@ const Databases = (props) => {
   const dispatch = useDispatch();
   const { toast } = useContext(toastContext);
   const databases = useSelector((state)=>state.database.databases);
+  const tables = useSelector((state)=>state.tables);
+  console.log(tables, 'tables ')
   React.useEffect(()=>{
     dispatch(getDatabases());
   },[])
@@ -84,7 +86,7 @@ const Databases = (props) => {
         </Table> */}
         <Accordion>
           {databases?.map((database,i)=>(
-          <AccordionItem>
+          <AccordionItem key={i+database}>
             <h2>
               <AccordionButton onClick={()=>handleChangeDB(database.Database)}>
                 <Box as='span' flex='1' textAlign='left'>
@@ -94,7 +96,22 @@ const Databases = (props) => {
               </AccordionButton>
             </h2>
             <AccordionPanel pb={4}>
-              Accordion Data
+              <Table>
+                <Thead>
+                  <Tr>
+                    <Th>Sr no.</Th>
+                    <Th>Tables in {database.Database}</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {tables?.map((table,ind)=>(
+                    <Tr>
+                      <Td>{ind + 1}</Td>
+                      <Td>{Object.values(table)}</Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
             </AccordionPanel>
           </AccordionItem>
           ))}

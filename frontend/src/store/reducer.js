@@ -10,6 +10,7 @@ const initState = {
         error: false,
         databases: []
     },
+    tables: "",
     currentDb:""
 }
 
@@ -37,7 +38,7 @@ const reducer = (state=initState,action)=>{
         }
         case GET_DATABASE_SUCCESS: {
             return {
-                ...state,database: {...state.database, databases: action.payload}
+                ...state,database: {...state.database, databases: action.payload.database}, tables: action.payload.tables
             }
         }
         case GET_DATABASE_ERROR: {

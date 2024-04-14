@@ -16,6 +16,10 @@ const connection = mysql.createConnection({
     database:'giraffe'
 })
 
+const executeQuery = async (query) => {
+    return connection.execute(query);
+}
+
 app.post('/',async(req,res)=>{
     let query = req.body;
     console.log(query);
@@ -26,9 +30,14 @@ app.post('/',async(req,res)=>{
 })
 
 app.get("/databases", async(req,res)=>{
-    connection.query("SHOW DATABASES;", function(err, r, fields){ 
+    connection.query("SHOW DATABASES;", async function(err, r, fields){ 
         if(err) throw err;
-        res.send(r);
+        connection.query("SHOW TABLES;", function(err, tables, fields){
+            if(err) throw err;
+            console.log(tables,"show tables response");
+            res.send({database: r, tables});
+        })
+        console.log("table changed to " + r);
     })
 })
 
@@ -41,11 +50,7 @@ app.post("/changedatabase", async(req,res)=>{
 })
 
 app.post("/showtables", async(req,res)=>{
-    connection.query("SHOW TABLES;", function(err, r, fields){
-        if(err) throw err;
-        console.log(r,"show tables response");
-        res.send(r);
-    })
+
 })
 
 app.listen(port,async()=>{
