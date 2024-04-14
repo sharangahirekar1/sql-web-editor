@@ -10,4 +10,13 @@
   4. Run the React app locally.
   5. Start Querying!
 
+
+
+### Todos ###
+  When user opens app for first time, he must be prompted for user, password, and database name. Once
+  the authentication and connection is successfully then only he must be shown to querying window.
+
+  When user clicks to change database, a modal must open after successfully changing the database 
+  showing the tables in the database.
+
   

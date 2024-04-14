@@ -7,6 +7,32 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toastContext } from './contexts/toast';
 
 function App() {
+  return (
+    <Box>
+      <Flex>
+        <Box p='4' w={'100vw'} height='100vh' bg='red.400' sx={{
+          display: 'flex',
+          flexDirection: "column",
+          justifyContent: "space-between"
+        }}>
+          <Editor/>
+          <Databases/>
+        </Box>
+        <Spacer />
+        <Box p='4' w='100vw' h='100vh' bg='green.400'>
+          <Results/>
+        </Box>
+      </Flex>
+    </Box>
+  );
+}
+
+export default App;
+
+
+
+
+const Databases = (props) => {
   const dispatch = useDispatch();
   const { toast } = useContext(toastContext);
   const databases = useSelector((state)=>state.database.databases);
@@ -25,55 +51,38 @@ function App() {
     })
   }
   return (
-    <Box>
-      <Flex>
-        <Box p='4' w={'100vw'} height='100vh' bg='red.400' sx={{
-          display: 'flex',
-          flexDirection: "column",
-          justifyContent: "space-between"
-        }}>
-          <Editor/>
-          <Box height="30vh" p='4' bg='yellow.400' sx={{
-            overflowY: "auto",
-            position: 'relative',
-          }}>
-            <Heading sx={{
-              position: 'fixed'
-            }}>
-              DATABASES
-            </Heading>
-            <Box sx={{
-              position: 'relative',
-              top: 10
-            }}>
-              <Table>
-                <Thead>
-                  <Tr>
-                    <Th>Sr. No.</Th>
-                    <Th>Database</Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {databases?.map((database,i)=>(
-                    <Tr sx={{
-                      cursor: "pointer"
-                    }} key={`${database.Database} ${i}`} onClick={()=>handleChangeDB(database.Database)}>
-                      <Td>{i+1}</Td>
-                      <Td>{database.Database}</Td>
-                    </Tr>
-                  ))}
-                </Tbody>
-              </Table>
-            </Box>
-          </Box>
-        </Box>
-        <Spacer />
-        <Box p='4' w='100vw' h='100vh' bg='green.400'>
-          <Results/>
-        </Box>
-      </Flex>
+    <Box height="30vh" p='4' bg='yellow.400' sx={{
+      overflowY: "auto",
+      position: 'relative',
+    }}>
+      <Heading sx={{
+        position: 'fixed'
+      }}>
+        DATABASES
+      </Heading>
+      <Box sx={{
+        position: 'relative',
+        top: 10
+      }}>
+        <Table>
+          <Thead>
+            <Tr>
+              <Th>Sr. No.</Th>
+              <Th>Database</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {databases?.map((database,i)=>(
+              <Tr sx={{
+                cursor: "pointer"
+              }} key={`${database.Database} ${i}`} onClick={()=>handleChangeDB(database.Database)}>
+                <Td>{i+1}</Td>
+                <Td>{database.Database}</Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      </Box>
     </Box>
-  );
+  )
 }
-
-export default App;
