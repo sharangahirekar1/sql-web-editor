@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Spacer, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Flex, Heading, Spacer, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import Editor from './components/Editor';
 import Results from './components/Results';
 import React, { useContext } from 'react';
@@ -64,7 +64,7 @@ const Databases = (props) => {
         position: 'relative',
         top: 10
       }}>
-        <Table>
+        {/* <Table>
           <Thead>
             <Tr>
               <Th>Sr. No.</Th>
@@ -81,7 +81,24 @@ const Databases = (props) => {
               </Tr>
             ))}
           </Tbody>
-        </Table>
+        </Table> */}
+        <Accordion>
+          {databases?.map((database,i)=>(
+          <AccordionItem>
+            <h2>
+              <AccordionButton onClick={()=>handleChangeDB(database.Database)}>
+                <Box as='span' flex='1' textAlign='left'>
+                  {database.Database}
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </h2>
+            <AccordionPanel pb={4}>
+              Accordion Data
+            </AccordionPanel>
+          </AccordionItem>
+          ))}
+        </Accordion>
       </Box>
     </Box>
   )
