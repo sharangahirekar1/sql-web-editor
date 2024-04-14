@@ -19,17 +19,15 @@ const connection = mysql.createConnection({
 app.post('/',async(req,res)=>{
     let query = req.body;
     console.log(query);
-    connection.query(query,function(err,r,fields){
+    connection.query(query,function(err,r,fields){ // field is column definition of the table
         if(err) throw err;
-        console.log(fields, 'fields from querying');
         res.send(r);
     })
 })
 
 app.get("/databases", async(req,res)=>{
-    connection.query("SHOW DATABASES;", function(err, r, fields){
+    connection.query("SHOW DATABASES;", function(err, r, fields){ 
         if(err) throw err;
-        console.log(fields, "fields from database showing");
         res.send(r);
     })
 })
@@ -38,6 +36,14 @@ app.post("/changedatabase", async(req,res)=>{
     let query = req.body;
     connection.query(`use ${query};`, function(err,r,fields){
         if(err) throw err;
+        res.send(r);
+    })
+})
+
+app.post("/showtables", async(req,res)=>{
+    connection.query("SHOW TABLES;", function(err, r, fields){
+        if(err) throw err;
+        console.log(r,"show tables response");
         res.send(r);
     })
 })
