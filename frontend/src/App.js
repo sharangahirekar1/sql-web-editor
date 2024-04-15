@@ -19,7 +19,9 @@ function App() {
           <Databases/>
         </Box>
         <Spacer />
-        <Box p='4' w='100vw' h='100vh' bg='green.400'>
+        <Box p='4' w='100vw' h='100vh' bg='green.400' sx={{
+          overflow: "scroll"
+        }}>
           <Results/>
         </Box>
       </Flex>
@@ -57,14 +59,14 @@ const Databases = (props) => {
       overflowY: "auto",
       position: 'relative',
     }}>
-      <Heading sx={{
+      {/* <Heading sx={{
         position: 'fixed'
       }}>
         DATABASES
-      </Heading>
+      </Heading> */}
       <Box sx={{
         position: 'relative',
-        top: 10
+        top: 0
       }}>
         {/* <Table>
           <Thead>
