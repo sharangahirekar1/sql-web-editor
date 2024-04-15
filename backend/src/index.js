@@ -37,7 +37,7 @@ app.get("/databases", async(req,res)=>{
             console.log(tables,"show tables response");
             res.send({database: r, tables});
         })
-        console.log("table changed to " + r);
+        // console.log("table changed to " + r);
     })
 })
 
@@ -45,7 +45,12 @@ app.post("/changedatabase", async(req,res)=>{
     let query = req.body;
     connection.query(`use ${query};`, function(err,r,fields){
         if(err) throw err;
-        res.send(r);
+        connection.query("SHOW TABLES;", function(err, tables, fields){
+            if(err) throw err;
+            console.log(tables,"show tables response");
+            res.send({database: r, tables});
+        })
+        console.log("table changed to " + r);
     })
 })
 

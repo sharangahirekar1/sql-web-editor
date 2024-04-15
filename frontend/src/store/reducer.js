@@ -53,7 +53,7 @@ const reducer = (state=initState,action)=>{
         }
         case CHANGE_DATABASE_SUCCESS: {
             return {
-                ...state,loading: false, currentDb: action.payload
+                ...state,loading: false, currentDb: action.payload.database.stateChanges.schema, tables: action.payload.tables
             }
         }
         case CHANGE_DATABASE_ERROR: {

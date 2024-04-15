@@ -86,7 +86,7 @@ const Databases = (props) => {
         </Table> */}
         <Accordion>
           {databases?.map((database,i)=>(
-          <AccordionItem key={i+database}>
+          <AccordionItem key={i+database.Database}>
             <h2>
               <AccordionButton onClick={()=>handleChangeDB(database.Database)}>
                 <Box as='span' flex='1' textAlign='left'>

@@ -39,6 +39,6 @@ export const changeDatabase = (dbName) => (dispatch) => {
             "Content-Type": "text/plain"
         }
     }).then((res)=>{
-        dispatch({type: CHANGE_DATABASE_SUCCESS, payload: res.data.stateChanges.schema});
+        dispatch({type: CHANGE_DATABASE_SUCCESS, payload: res.data});
     }).catch((err)=>dispatch({type: CHANGE_DATABASE_ERROR}))
 }
