@@ -7,20 +7,40 @@ const app = express();
 const port = defaultConfig.development.port;
 
 app.use(express.text());
+app.use(express.json());
 app.use(cors());
-
-const connection = mysql.createConnection({
-    host:'localhost',
-    user:'root',
-    password:'qwerty',
-    database:'giraffe'
-})
+let connection;
+// const connection = mysql.createConnection({
+//     host:'localhost',
+//     user:'root',
+//     password:'qwerty',
+//     database:'giraffe'
+// })
 
 const executeQuery = async (query) => {
     return connection.execute(query);
 }
 
+app.post("/connect", async (req,res)=>{
+    const connData = req.body;
+    console.log(connData, '-----conn data-------');
+    try {
+        connection =  mysql.createConnection({
+            host:"localhost",
+            user: connData.username,
+            password: connData.password,
+            database: connData.database
+        })
+        await connection.connect();
+        res.send("Connection successful");
+    }
+    catch(err) {
+        console.log(err, "error while connecting")
+    }
+})
+
 app.post('/',async(req,res)=>{
+    console.log(connection, 'connection info')
     let query = req.body;
     console.log(query);
     connection.query(query,function(err,r,fields){ // field is column definition of the table
@@ -59,6 +79,6 @@ app.post("/showtables", async(req,res)=>{
 })
 
 app.listen(port,async()=>{
-    await connection.connect();
+    // await connection.connect();
     console.log("Server is running on port",port);
 })
