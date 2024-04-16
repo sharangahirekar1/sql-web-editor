@@ -46,6 +46,7 @@ const Connect = () => {
   const handleConnect = ()=> {
     connectApi().then((res)=>{
       if(res.data === "Connection successful") {
+        localStorage.setItem("sqlConnection", true);
         navigate("/editor");
       }
     })

@@ -6,6 +6,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Connect from './pages/Connect';
+import VerifyConnection from './hoc/VerifyConnection';
 
 
 const router = createBrowserRouter([
@@ -15,7 +16,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/editor",
-    element: <SQLEditor/>
+    element: <VerifyConnection/>
   }
 ])
 
