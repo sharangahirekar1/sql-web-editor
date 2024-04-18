@@ -1,7 +1,8 @@
 import { Box, Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
 import axios from 'axios';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from "react-router-dom";
+import { DataContext } from '../contexts/dataContext';
 
 const Connect = () => {
   const [connData, setConnData] = React.useState({
@@ -9,7 +10,8 @@ const Connect = () => {
     password: "",
     database: "test"
   })
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const {connectionStatus, setConnectionStatus} = useContext(DataContext);
 
   const handleInputChange = (ev)=>{
     const value = ev.target.value;
@@ -46,7 +48,7 @@ const Connect = () => {
   const handleConnect = ()=> {
     connectApi().then((res)=>{
       if(res.data === "Connection successful") {
-        localStorage.setItem("sqlConnection", true);
+        setConnectionStatus(true);
         navigate("/editor");
       }
     })
