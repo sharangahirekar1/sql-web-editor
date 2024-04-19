@@ -25,14 +25,16 @@ app.post("/connect", async (req,res)=>{
     const connData = req.body;
     console.log(connData, '-----conn data-------');
     try {
-        connection =  mysql.createConnection({
-            host:"localhost",
-            user: connData.username,
-            password: connData.password,
-            database: connData.database
-        })
-        await connection.connect();
-        res.send("Connection successful");
+        if(connData && connData.username && connData.password) {
+            connection =  mysql.createConnection({
+                host:"localhost",
+                user: connData.username,
+                password: connData.password,
+                database: connData.database
+            })
+            await connection.connect();
+            res.send("Connection successful");
+        }
     }
     catch(err) {
         console.log(err, "error while connecting")

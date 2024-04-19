@@ -17,6 +17,10 @@ const router = createBrowserRouter([
   {
     path: "/editor",
     element: <VerifyConnection/>
+  },
+  {
+    path: "/*",
+    element: <h2>Error Occured!</h2>
   }
 ])
 
