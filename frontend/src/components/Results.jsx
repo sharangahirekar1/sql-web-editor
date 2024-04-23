@@ -1,10 +1,23 @@
 import { Box, TableContainer, Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react';
-import React from 'react'
+import React, { useContext } from 'react'
 import { useSelector } from 'react-redux'
+import { toastContext } from '../contexts/toast';
 
 const Results = () => {
     const res = useSelector((state)=>state.res);
     const header = Array.isArray(res) && res.length != 0 && Object.keys(res[0]);
+    const { toast } = useContext(toastContext);
+    React.useEffect(()=>{
+      if(Array.isArray(res) && res.length != 0 ){
+        toast({
+          title: 'Results fetched',
+          description: "Response fetched for the given query",
+          status: 'success',
+          duration: 7000,
+          isClosable: true,
+        })
+      }
+    },[res])
   return (
     <Box>
       <TableContainer>
