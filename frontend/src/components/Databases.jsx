@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toastContext } from './../contexts/toast';
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import React, { useContext } from 'react';
+import { DataContext } from '../contexts/dataContext';
 
 
 const Databases = (props) => {
     const dispatch = useDispatch();
     const { toast } = useContext(toastContext);
+    const {setQUery} = useContext(DataContext);
     const databases = useSelector((state)=>state.database.databases);
     const tables = useSelector((state)=>state.tables);
     console.log(tables, 'tables ')
@@ -78,7 +80,9 @@ const Databases = (props) => {
                   </Thead>
                   <Tbody>
                     {tables?.map((table,ind)=>(
-                      <Tr>
+                      <Tr sx={{
+                        cursor: "pointer"
+                      }} onClick={()=>setQUery(`SELECT * FROM ${Object.values(table)} LIMIT 10;`)}>
                         <Td>{ind + 1}</Td>
                         <Td>{Object.values(table)}</Td>
                       </Tr>

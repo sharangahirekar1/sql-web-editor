@@ -1,10 +1,11 @@
 import { Box, Button, Textarea } from '@chakra-ui/react'
-import React from 'react';
+import React, { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { postApi } from '../store/action';
+import { DataContext } from '../contexts/dataContext';
 
 const Editor = () => {
-    const [query,setQUery] = React.useState({});
+    const {query, setQUery} = useContext(DataContext);
     const dispatch = useDispatch();
     const handleChange = (e)=>{
         const {value} = e.target;
@@ -13,6 +14,13 @@ const Editor = () => {
     const handleSubmit = ()=>{
         dispatch(postApi(query));
     }
+    React.useEffect(()=>{
+        if(query !== "" ){
+            setTimeout(()=>{
+                handleSubmit();
+            },500)
+        }
+    },[query])
   return (
     <Box>
         <Textarea onChange={handleChange} bgColor={'whiteAlpha.900'} placeholder='SELECT * FROM employee;' siz='lg' resize={'vertical'}  />
