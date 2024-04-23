@@ -35,7 +35,8 @@ const Connect = () => {
   }
 
   const connectApi = async () => {
-    return axios({
+    if(connData.password === "") return ""
+    let res = await axios({
       method: "POST",
       url: "http://localhost:8000/connect",
       data: connData,
@@ -43,16 +44,20 @@ const Connect = () => {
         "Content-type": "application/json"
       }
     })
+
+    return res.data;
   }
 
-  const handleConnect = ()=> {
-    connectApi().then((res)=>{
-      if(res.data === "Connection successful") {
-        setConnectionStatus(true);
-        navigate("/editor");
-      }
-    })
+  const handleConnect = async ()=> {
+    let res = await connectApi();
+    if(res === "Connection successful") {
+      setConnectionStatus(true);
+    }
   }
+
+  React.useEffect(()=>{
+    if(connectionStatus) navigate("/editor");
+  },[connectionStatus])
 
   console.log(connData, "connection data");
   return (
