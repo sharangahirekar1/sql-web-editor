@@ -25,6 +25,6 @@
   the database to which the table must be added </span>
 
   <span style="color:green">~~On clicking on a table in the databases, it should automatically get top 5 or 10 results for that table in 
-  results.~~ </span>
+  results.~~ </span> 
 
   
