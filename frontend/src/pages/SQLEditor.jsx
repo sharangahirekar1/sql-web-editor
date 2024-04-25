@@ -39,6 +39,8 @@ const SQLEditor = () => {
         isClosable: true,
       })
       dispatch(getDatabases());
+      onClose();
+      setNewDBName("");
     }
   }
   return (

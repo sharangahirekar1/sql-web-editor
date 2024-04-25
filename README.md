@@ -19,7 +19,7 @@
   <span style="color:green">~~When user clicks to change database, a modal must open after successfully changing the database 
   showing the tables in the database.~~ (done) </span>
 
-  <span style="color:red">Creating a button to create a new database, on clicking it must open modal to enter the table name </span>
+  <span style="color:green">~~Creating a button to create a new database, on clicking it must open modal to enter the table name~~ (done) </span>
 
   <span style="color:red">Creating a button to create a new table, on clicking it must open modal to enter the details and selecting
   the database to which the table must be added </span>

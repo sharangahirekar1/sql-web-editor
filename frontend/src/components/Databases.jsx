@@ -12,7 +12,6 @@ const Databases = (props) => {
     const {setQUery} = useContext(DataContext);
     const databases = useSelector((state)=>state.database.databases);
     const tables = useSelector((state)=>state.tables);
-    console.log(tables, 'tables ')
     React.useEffect(()=>{
       dispatch(getDatabases());
     },[])
@@ -41,24 +40,6 @@ const Databases = (props) => {
           position: 'relative',
           top: 0
         }}>
-          {/* <Table>
-            <Thead>
-              <Tr>
-                <Th>Sr. No.</Th>
-                <Th>Database</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {databases?.map((database,i)=>(
-                <Tr sx={{
-                  cursor: "pointer"
-                }} key={`${database.Database} ${i}`} onClick={()=>handleChangeDB(database.Database)}>
-                  <Td>{i+1}</Td>
-                  <Td>{database.Database}</Td>
-                </Tr>
-              ))}
-            </Tbody>
-          </Table> */}
           <Accordion>
             {databases?.map((database,i)=>(
             <AccordionItem key={i+database.Database}>
