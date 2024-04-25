@@ -63,6 +63,14 @@ app.get("/databases", async(req,res)=>{
     })
 })
 
+app.post("/createdatabase", async(req,res)=>{
+    let db = req.body;
+    connection?.query(`CREATE DATABASE ${db};`, function(err,r,fields){
+        if(err) throw err;
+        res.send("Database created successfully");
+    })
+})
+
 app.post("/changedatabase", async(req,res)=>{
     let query = req.body;
     connection?.query(`use ${query};`, function(err,r,fields){
