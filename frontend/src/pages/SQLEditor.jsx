@@ -4,6 +4,7 @@ import Editor from '../components/Editor'
 import Databases from '../components/Databases'
 import Results from '../components/Results'
 import { BsDatabaseFillAdd } from "react-icons/bs";
+import { GrTableAdd } from "react-icons/gr";
 import { Tooltip } from '@chakra-ui/react'
 import axios from 'axios'
 import { toastContext } from '../contexts/toast'
@@ -11,7 +12,8 @@ import { useDispatch } from 'react-redux'
 import { getDatabases } from '../store/action'
 
 const SQLEditor = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen: isOpenDB, onOpen: onOpenDB, onClose: onCloseDB } = useDisclosure();
+  const { isOpen: isOpenTable, onOpen: onOpenTable, onClose: onCloseTable } = useDisclosure();
   const [newDBName, setNewDBName] = useState("");
   const {toast} = useContext(toastContext);
   const dispatch = useDispatch();
@@ -39,7 +41,7 @@ const SQLEditor = () => {
         isClosable: true,
       })
       dispatch(getDatabases());
-      onClose();
+      onCloseDB();
       setNewDBName("");
     }
   }
@@ -59,8 +61,14 @@ const SQLEditor = () => {
             top: 0
           }}>
             <Box></Box>
-            <Box>
-              <Tooltip label="Create Database"><Button onClick={onOpen}><BsDatabaseFillAdd /></Button></Tooltip>
+            <Box sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              gap: "10px"
+            }}>
+              <Tooltip label="Create Table"><Button onClick={onOpenTable}><GrTableAdd /></Button></Tooltip>
+              <Tooltip label="Create Database"><Button onClick={onOpenDB}><BsDatabaseFillAdd /></Button></Tooltip>
             </Box>
           </Box>
           <Box w='92%'  sx={{
@@ -79,7 +87,9 @@ const SQLEditor = () => {
           <Results/>
         </Box>
       </Flex>
-      <Modal isOpen={isOpen} onClose={onClose}>
+
+      {/* Create Database Modal */}
+      <Modal isOpen={isOpenDB} onClose={onCloseDB}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Create Database</ModalHeader>
@@ -92,7 +102,26 @@ const SQLEditor = () => {
             <Button colorScheme='blue' mr={3} onClick={handleCreateDB}>
               Create DB
             </Button>
-            <Button variant='ghost' onClick={onClose}>Cancel</Button>
+            <Button variant='ghost' onClick={onCloseDB}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      {/* Create Table Modal */}
+      <Modal isOpen={isOpenTable} onClose={onCloseTable}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Create Table</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Input placeholder='Create Table' value={newDBName} onChange={(ev)=>setNewDBName(ev.target.value)}/>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme='blue' mr={3} onClick={onCloseTable}>
+              Create Table
+            </Button>
+            <Button variant='ghost' onClick={onCloseDB}>Cancel</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
