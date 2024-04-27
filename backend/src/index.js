@@ -1,7 +1,8 @@
+require('module-alias/register');
 const express = require('express');
 const mysql = require('mysql2');
 const cors = require('cors');
-const defaultConfig = require("./../config/defaults.json");
+const defaultConfig = require("@config/defaults.json");
 
 const app = express();
 const port = defaultConfig.development.port;
