@@ -3,6 +3,7 @@ const express = require('express');
 const mysql = require('mysql2');
 const cors = require('cors');
 const defaultConfig = require("@config/defaults.json");
+const Sequelize = require("sequelize");
 
 const app = express();
 const port = defaultConfig.development.port;
@@ -20,6 +21,13 @@ let connection;
 
 const executeQuery = async (query) => {
     return connection.execute(query);
+}
+
+const connectSequelize = async ({database,username,password}) => {
+    return new Sequelize(database,username,password, {
+        host: "localhost",
+        dialect: "postgres"
+    })
 }
 
 app.post("/connect", async (req,res)=>{
