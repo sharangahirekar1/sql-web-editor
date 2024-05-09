@@ -1,9 +1,9 @@
 require('module-alias/register');
 const express = require('express');
-const mysql = require('mysql2');
 const cors = require('cors');
 const defaultConfig = require("@config/defaults.json");
 const Sequelize = require("sequelize");
+const controls = require('./controllers');
 
 const app = express();
 const port = defaultConfig.development.port;
@@ -11,7 +11,7 @@ const port = defaultConfig.development.port;
 app.use(express.text());
 app.use(express.json());
 app.use(cors());
-let connection;
+// export let connection;
 // const connection = mysql.createConnection({
 //     host:'localhost',
 //     user:'root',
@@ -31,19 +31,8 @@ const connectSequelize = async ({database,username,password}) => {
 }
 
 app.post("/connect", async (req,res)=>{
-    const connData = req.body;
-    console.log(connData, '-----conn data-------');
     try {
-        if(connData && connData.username && connData.password) {
-            connection =  mysql.createConnection({
-                host:"localhost",
-                user: connData.username,
-                password: connData.password,
-                database: connData.database
-            })
-            await connection.connect();
-            res.send("Connection successful");
-        }
+        await controls.connect(req,res);
     }
     catch(err) {
         console.log(err, "error while connecting")
@@ -51,51 +40,44 @@ app.post("/connect", async (req,res)=>{
 })
 
 app.post('/',async(req,res)=>{
-    console.log(connection, 'connection info')
-    let query = req.body;
-    console.log(query);
-    connection?.query(query,function(err,r,fields){ // field is column definition of the table
-        if(err) throw err;
-        res.send(r);
-    })
+    try {
+        await controls.queries(req,res);
+    }
+    catch(err) {
+        console.log(err, "Error in queries");
+    }
 })
 
 app.get("/databases", async(req,res)=>{
-    connection?.query("SHOW DATABASES;", async function(err, r, fields){ 
-        if(err) throw err;
-        connection?.query("SHOW TABLES;", function(err, tables, fields){
-            if(err) throw err;
-            console.log(tables,"show tables response");
-            res.send({database: r, tables});
-        })
-        // console.log("table changed to " + r);
-    })
+    try {
+        await controls.datatables(req,res);
+    }
+    catch(err) {
+        console.log(err, "Error in getting tables from database");
+    }
 })
 
 app.post("/createdatabase", async(req,res)=>{
-    let db = req.body;
-    connection?.query(`CREATE DATABASE ${db};`, function(err,r,fields){
-        if(err) throw err;
-        res.send("Database created successfully");
-    })
+    try {
+        await controls.createDatabase(req,res);
+    }
+    catch(err) {
+        console.log(err, "Error in creating database");
+    }
 })
 
 app.post("/changedatabase", async(req,res)=>{
-    let query = req.body;
-    connection?.query(`use ${query};`, function(err,r,fields){
-        if(err) throw err;
-        connection?.query("SHOW TABLES;", function(err, tables, fields){
-            if(err) throw err;
-            console.log(tables,"show tables response");
-            res.send({database: r, tables});
-        })
-        console.log("table changed to " + r);
-    })
+    try {
+        await controls.changeDatabase(req,res);
+    }
+    catch(err) {
+        console.log(err, "Error in changing database");
+    }
 })
 
-app.post("/showtables", async(req,res)=>{
+// app.post("/showtables", async(req,res)=>{
 
-})
+// })
 
 app.listen(port,async()=>{
     // await connection.connect();
