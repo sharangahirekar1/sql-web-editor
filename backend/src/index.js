@@ -4,10 +4,12 @@ const cors = require('cors');
 const defaultConfig = require("@config/defaults.json");
 const Sequelize = require("sequelize");
 const controls = require('./controllers');
+const morgan = require("morgan");
 
 const app = express();
 const port = defaultConfig.development.port;
 
+app.use(morgan("combined"));
 app.use(express.text());
 app.use(express.json());
 app.use(cors());
