@@ -1,5 +1,6 @@
 {
     "development":{
-        "port":8000
+        "port":8000,
+        "mongoURL":"mongodb://127.0.0.1:27017/sql_editor"
     }
 }

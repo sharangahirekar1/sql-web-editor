@@ -5,9 +5,14 @@ const defaultConfig = require("@config/defaults.json");
 const Sequelize = require("sequelize");
 const controls = require('./controllers');
 const morgan = require("morgan");
+const mongoose = require("mongoose");
+const Request = require("./models/requests");
+
 
 const app = express();
 const port = defaultConfig.development.port;
+const mongoURL = defaultConfig.development.mongoURL;
+console.log(mongoURL, "mongos url");
 
 app.use(morgan("combined"));
 app.use(express.text());
@@ -20,6 +25,22 @@ app.use(cors());
 //     password:'qwerty',
 //     database:'giraffe'
 // })
+
+app.use((req,res,next)=>{
+    console.log(Object.keys(req),'req object');
+    const request = new Request({
+        url: req.url,
+        method: req.method,
+        params: req.params,
+        query: req.query,
+        remoteAddress: req._remoteAddress,
+        baseUrl: req.baseUrl
+    });
+
+    request.save();
+
+    next();
+})
 
 const executeQuery = async (query) => {
     return connection.execute(query);
@@ -83,5 +104,6 @@ app.post("/changedatabase", async(req,res)=>{
 
 app.listen(port,async()=>{
     // await connection.connect();
+    await mongoose.connect(mongoURL);
     console.log("Server is running on port",port);
 })
