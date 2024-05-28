@@ -94,7 +94,7 @@ const Connect = () => {
       </FormControl>
       <FormControl>
         <FormLabel>Password</FormLabel>
-        <Input name={"password"} type='password' value={connData.password} onChange={handleInputChange} />
+        <Input name={"password"} placeholder='password' type='password' value={connData.password} onChange={handleInputChange} />
       </FormControl>
       <FormControl>
         <FormLabel>Database</FormLabel>
