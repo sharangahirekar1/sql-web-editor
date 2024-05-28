@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
+import { Box, Button, FormControl, FormLabel, Heading, Input } from '@chakra-ui/react';
 import axios from 'axios';
 import React, { useContext } from 'react';
 import { useNavigate } from "react-router-dom";
@@ -74,7 +74,20 @@ const Connect = () => {
 
   console.log(connData, "connection data");
   return (
-    <Box>
+    <Box sx={{
+      margin: "auto",
+      width: "50%",
+      background: "#f5f5dc",
+      height: "100vh",
+      padding: "20px",
+      display: "flex",
+      flexDirection: "column",
+      gap: "20px",
+    }}>
+      <Heading sx={{
+        textAlign: "center",
+        marginBottom: "50px"
+      }}>CONNECT TO SQL DATABASE</Heading>
       <FormControl>
         <FormLabel>User name</FormLabel>
         <Input name={"username"} type='text' value={connData.username} onChange={handleInputChange} />
