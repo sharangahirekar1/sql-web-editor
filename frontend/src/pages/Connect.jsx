@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useContext } from 'react';
 import { useNavigate } from "react-router-dom";
 import { DataContext } from '../contexts/dataContext';
+import { toastContext } from '../contexts/toast';
 
 const Connect = () => {
   const [connData, setConnData] = React.useState({
@@ -10,6 +11,7 @@ const Connect = () => {
     password: "",
     database: "test"
   })
+  const { toast } = useContext(toastContext);
   const navigate = useNavigate();
   const {connectionStatus, setConnectionStatus} = useContext(DataContext);
 
@@ -56,7 +58,18 @@ const Connect = () => {
   }
 
   React.useEffect(()=>{
-    if(connectionStatus) navigate("/editor");
+    if(connectionStatus){
+      toast({
+        title: 'Connection Successfull',
+        description: "Redirecting to editor ...",
+        status: 'success',
+        duration: 4000,
+        isClosable: true,
+      })
+      setTimeout(()=>{
+        navigate("/editor");
+      },1000)
+    }
   },[connectionStatus])
 
   console.log(connData, "connection data");
