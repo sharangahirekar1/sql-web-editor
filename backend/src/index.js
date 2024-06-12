@@ -12,19 +12,12 @@ const Request = require("./models/requests");
 const app = express();
 const port = defaultConfig.development.port;
 const mongoURL = defaultConfig.development.mongoURL;
-console.log(mongoURL, "mongos url");
+
 
 app.use(morgan("combined"));
 app.use(express.text());
 app.use(express.json());
 app.use(cors());
-// export let connection;
-// const connection = mysql.createConnection({
-//     host:'localhost',
-//     user:'root',
-//     password:'qwerty',
-//     database:'giraffe'
-// })
 
 app.use((req,res,next)=>{
     console.log(Object.keys(req),'req object');
@@ -98,12 +91,7 @@ app.post("/changedatabase", async(req,res)=>{
     }
 })
 
-// app.post("/showtables", async(req,res)=>{
-
-// })
-
 app.listen(port,async()=>{
-    // await connection.connect();
     await mongoose.connect(mongoURL);
     console.log("Server is running on port",port);
 })
